@@ -1,19 +1,14 @@
 FROM node:22
 
-# 作業ディレクトリを作成
 WORKDIR /app
 
-# package.json, package-lock.json のみコピー（キャッシュ効かせるため）
 COPY package*.json ./
-
-# 依存インストール
 RUN npm install
 
-# tsconfig.json など設定ファイルも必要に応じて後でコピー可能
-# アプリのコードは volume マウントされる想定なので COPY しない
+COPY . .
 
-# 開放ポート（アプリが listen する）
+RUN npm install -g ts-node typescript
+
 EXPOSE 9010
 
-# サーバー起動
-CMD ["npx", "ts-node", "server/server.ts"]
+CMD ["ts-node", "--require", "./tracing/tracing.ts", "server/server.ts"]
