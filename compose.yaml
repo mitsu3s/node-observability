@@ -5,7 +5,7 @@ services:
       dockerfile: .docker/server/Dockerfile
     container_name: node-otel-server
     ports:
-      - "9010:9010"
+      - "9010:9010" # API Server
     volumes:
       - type: bind
         source: ./server
@@ -18,6 +18,7 @@ services:
         target: /app/tsconfig.json
     depends_on:
       - jaeger
+      - prometheus
 
   jaeger:
     build:
@@ -27,3 +28,15 @@ services:
     ports:
       - "16686:16686" # UI
       - "4318:4318" # OTLP HTTP
+
+  prometheus:
+    build:
+      context: .
+      dockerfile: .docker/prometheus/Dockerfile
+    container_name: node-otel-prometheus
+    ports:
+      - "9090:9090" # Prometheus UI
+    volumes:
+      - type: bind
+        source: ./.docker/prometheus/prometheus.yaml
+        target: /etc/prometheus/prometheus.yml
