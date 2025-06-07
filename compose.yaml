@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: .docker/server/Dockerfile
     container_name: node-otel-server
+    environment:
+      TZ: "Asia/Tokyo"
     ports:
       - "9010:9010" # API Server
     volumes:
@@ -25,6 +27,8 @@ services:
       context: .
       dockerfile: .docker/jaeger/Dockerfile
     container_name: node-otel-jaeger
+    environment:
+      TZ: "Asia/Tokyo"
     ports:
       - "16686:16686" # UI
       - "4318:4318" # OTLP HTTP
@@ -34,9 +38,24 @@ services:
       context: .
       dockerfile: .docker/prometheus/Dockerfile
     container_name: node-otel-prometheus
+    environment:
+      TZ: "Asia/Tokyo"
     ports:
       - "9090:9090" # Prometheus UI
     volumes:
       - type: bind
         source: ./.docker/prometheus/prometheus.yaml
         target: /etc/prometheus/prometheus.yml
+
+  grafana:
+    build:
+      context: .
+      dockerfile: .docker/grafana/Dockerfile
+    container_name: node-otel-grafana
+    environment:
+      TZ: "Asia/Tokyo"
+      GF_SECURITY_ADMIN_PASSWORD: password
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SERVER_DOMAIN: localhost
+    ports:
+      - "3000:3000" # Grafana UI
