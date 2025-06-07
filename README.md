@@ -1,6 +1,13 @@
-# node-otel
+# node-observability
 
-Node.js-based OpenTelemetry.
+Node.js による可観測性の機能テスト
+
+## Feature
+
+- OpenTelemetry（中間基盤）
+- Jaeger（トレース可視化）
+- Prometheus（メトリクス収集）
+- Grafana（ダッシュボード表示）
 
 ## Requirement
 
