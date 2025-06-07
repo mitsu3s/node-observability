@@ -1,12 +1,16 @@
-import express from "express";
+import express, { Express } from "express";
 
-const app = express();
-const port = 9010;
+const PORT: number = parseInt(process.env.PORT || "9010");
+const app: Express = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello OpenTelemetry!");
+function getRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+app.get("/rolldice", (req, res) => {
+  res.send(getRandomNumber(1, 6).toString());
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Listening for requests on http://localhost:${PORT}`);
 });
