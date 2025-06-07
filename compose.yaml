@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: .docker/server/Dockerfile
-    container_name: node-otel-server
+    container_name: node-observability-server
     environment:
       TZ: "Asia/Tokyo"
     ports:
@@ -26,7 +26,7 @@ services:
     build:
       context: .
       dockerfile: .docker/jaeger/Dockerfile
-    container_name: node-otel-jaeger
+    container_name: node-observability-jaeger
     environment:
       TZ: "Asia/Tokyo"
     ports:
@@ -37,7 +37,7 @@ services:
     build:
       context: .
       dockerfile: .docker/prometheus/Dockerfile
-    container_name: node-otel-prometheus
+    container_name: node-observability-prometheus
     environment:
       TZ: "Asia/Tokyo"
     ports:
@@ -51,7 +51,7 @@ services:
     build:
       context: .
       dockerfile: .docker/grafana/Dockerfile
-    container_name: node-otel-grafana
+    container_name: node-observability-grafana
     environment:
       TZ: "Asia/Tokyo"
       GF_SECURITY_ADMIN_PASSWORD: password
