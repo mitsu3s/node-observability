@@ -1,9 +1,9 @@
-version: "3.8"
 services:
   server:
     build:
       context: .
       dockerfile: .docker/server/Dockerfile
+    container_name: node-otel-server
     ports:
       - "9010:9010"
     volumes:
@@ -14,9 +14,6 @@ services:
         source: ./tracing
         target: /app/tracing
       - type: bind
-        source: ./package.json
-        target: /app/package.json
-      - type: bind
         source: ./tsconfig.json
         target: /app/tsconfig.json
     depends_on:
@@ -26,6 +23,7 @@ services:
     build:
       context: .
       dockerfile: .docker/jaeger/Dockerfile
+    container_name: node-otel-jaeger
     ports:
       - "16686:16686"
       - "14268:14268"

@@ -15,5 +15,5 @@ RUN npm install
 # 開放ポート（アプリが listen する）
 EXPOSE 9010
 
-# 起動コマンド（ts-nodeでTypeScriptを直接実行）
+# サーバー起動
 CMD ["npx", "ts-node", "server/server.ts"]
