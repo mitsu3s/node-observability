@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  server:
+    build:
+      context: .
+      dockerfile: .docker/server/Dockerfile
+    ports:
+      - "9010:9010"
+    volumes:
+      - type: bind
+        source: ./server
+        target: /app/server
+      - type: bind
+        source: ./tracing
+        target: /app/tracing
+      - type: bind
+        source: ./package.json
+        target: /app/package.json
+      - type: bind
+        source: ./tsconfig.json
+        target: /app/tsconfig.json
+    depends_on:
+      - jaeger
+
+  jaeger:
+    build:
+      context: .
+      dockerfile: .docker/jaeger/Dockerfile
+    ports:
+      - "16686:16686"
+      - "14268:14268"
